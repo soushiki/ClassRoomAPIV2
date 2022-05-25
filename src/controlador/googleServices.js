@@ -97,7 +97,7 @@ function handleAuthClick() {
     userIDLogged = profile.result.id;
 
 
-    location.replace ('./vista/choose-user.html');
+  
   };
 
 
@@ -109,6 +109,9 @@ function handleAuthClick() {
     // Skip display of account chooser and consent dialog for an existing session.
     tokenClient.requestAccessToken({ prompt: '' });
   }
+ 
+  window.location.replace ('./vista/choose-user.html');
+
 }
 
 
