@@ -1,10 +1,9 @@
 
 function chooseStudent(){
-    alert("1");
 }
 
 function chooseTeacher(){
-    alert("1");
+    return 2;
 }
 
 export function chooseUser(option){

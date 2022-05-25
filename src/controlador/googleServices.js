@@ -1,4 +1,4 @@
-import chooseUser from "./chooseUser";
+
 /* exported gapiLoaded */
 /* exported gisLoaded */
 /* exported handleAuthClick */
@@ -84,8 +84,9 @@ function handleAuthClick() {
     }
     console.log("tokenClient.callback:", resp);
     localStorage.setItem('tokenClient', JSON.stringify(resp));
-    document.getElementById('signout_button').style.visibility = 'visible';
-    document.getElementById('authorize_button').innerText = 'Refresh';
+    
+    
+
 
     //get the profile information
     const profile = await gapi.client.classroom.userProfiles.get({
@@ -96,7 +97,7 @@ function handleAuthClick() {
     userIDLogged = profile.result.id;
 
 
-    await listCourses();
+    location.replace ('./vista/choose-user.html');
   };
 
 
