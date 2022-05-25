@@ -39,8 +39,11 @@ function gapiLoaded() {
 async function intializeGapiClient() {
   var gapiRes = await gapi.client.init({
     apiKey: API_KEY,
-    discoveryDocs: [DISCOVERY_DOC],
+    discoveryDocs: [DISCOVERY_DOC]
   });
+
+   
+   
   console.log("gapiRes:", gapiRes);
   gapiInited = true;
   maybeEnableButtons();
@@ -54,6 +57,7 @@ function gisLoaded() {
     client_id: CLIENT_ID,
     scope: SCOPES,
     callback: '', // defined later
+   
   });
   console.log("tokenClient:", tokenClient);
   gisInited = true;
@@ -71,6 +75,7 @@ function maybeEnableButtons() {
   } */
   if (gapiInited && gisInited) {
     document.getElementById('authorize_button').style.visibility = 'visible';
+    
   }
 }
 
@@ -78,6 +83,7 @@ function maybeEnableButtons() {
  *  Sign in the user upon button click.
  */
 function handleAuthClick() {
+  const profile = '';
   tokenClient.callback = async (resp) => {
     if (resp.error !== undefined) {
       throw (resp);
@@ -89,7 +95,7 @@ function handleAuthClick() {
 
 
     //get the profile information
-    const profile = await gapi.client.classroom.userProfiles.get({
+    profile = await gapi.client.classroom.userProfiles.get({
       userId: 'me'
     });
     console.log("profile:", profile);
@@ -105,13 +111,19 @@ function handleAuthClick() {
     // Prompt the user to select a Google Account and ask for consent to share their data
     // when establishing a new session.
     tokenClient.requestAccessToken({ prompt: 'consent' });
+    
   } else {
     // Skip display of account chooser and consent dialog for an existing session.
     tokenClient.requestAccessToken({ prompt: '' });
+    
   }
- location.replace ('../vista/choose-user.html');
-
+   
+  window.location.replace('http://localhost:3000/src/vista/choose-user.html');
+  
+   
+  
 }
+
 
 
 
