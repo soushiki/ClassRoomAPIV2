@@ -7,6 +7,8 @@
 // TODO(developer): Set to client ID and API key from the Developer Console
 const CLIENT_ID = '760748803726-ulpki8trrvhp56hur5h9cjp4b0mns3ub.apps.googleusercontent.com';
 const API_KEY = 'AIzaSyCCFPlhSEMyJmbUvSsOCQEHntWwu0CZJAs';
+const REDIRECT_URl = 'https://localhost:3000/src/vista/choose-user';
+const BASE_URl = 'https://localhost:3000';
 
 // Discovery doc URL for APIs used by the quickstart
 const DISCOVERY_DOC = 'https://classroom.googleapis.com/$discovery/rest';
@@ -40,6 +42,7 @@ async function intializeGapiClient() {
   var gapiRes = await gapi.client.init({
     apiKey: API_KEY,
     discoveryDocs: [DISCOVERY_DOC]
+  
   });
 
    
@@ -56,8 +59,8 @@ function gisLoaded() {
   tokenClient = google.accounts.oauth2.initTokenClient({
     client_id: CLIENT_ID,
     scope: SCOPES,
-    callback: '', // defined later
-   
+    callback: '',
+    
   });
   console.log("tokenClient:", tokenClient);
   gisInited = true;
@@ -77,32 +80,33 @@ function maybeEnableButtons() {
     document.getElementById('authorize_button').style.visibility = 'visible';
     
   }
+
 }
 
 /**
  *  Sign in the user upon button click.
  */
 function handleAuthClick() {
+ 
+  
   const profile = '';
   tokenClient.callback = async (resp) => {
     if (resp.error !== undefined) {
       throw (resp);
+     
     }
     console.log("tokenClient.callback:", resp);
     localStorage.setItem('tokenClient', JSON.stringify(resp));
-    
-    
-
 
     //get the profile information
     profile = await gapi.client.classroom.userProfiles.get({
-      userId: 'me'
+      userId: CLIENT_ID
     });
     console.log("profile:", profile);
 
     userIDLogged = profile.result.id;
 
-
+    
   
   };
 
@@ -118,7 +122,7 @@ function handleAuthClick() {
     
   }
    
-  window.location.replace('http://localhost:3000/src/vista/choose-user.html');
+ 
   
    
   
