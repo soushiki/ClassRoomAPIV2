@@ -83,30 +83,36 @@ function maybeEnableButtons() {
 
 }
 
+
+
 /**
  *  Sign in the user upon button click.
  */
-function handleAuthClick() {
- 
+let authButton = document.getElementById("authorize_button");
+
+
+const handleAuthClick = e => {
+   
+  e.preventDefault();
   
   const profile = '';
+  
+  
   tokenClient.callback = async (resp) => {
     if (resp.error !== undefined) {
       throw (resp);
-     
+      
     }
-    console.log("tokenClient.callback:", resp);
     localStorage.setItem('tokenClient', JSON.stringify(resp));
 
     //get the profile information
     profile = await gapi.client.classroom.userProfiles.get({
       userId: CLIENT_ID
     });
-    console.log("profile:", profile);
 
+    console.log(profile);
     userIDLogged = profile.result.id;
 
-    
   
   };
 
@@ -128,7 +134,7 @@ function handleAuthClick() {
   
 }
 
-
+authButton.addEventListener( "click", handleAuthClick );
 
 
 /**
